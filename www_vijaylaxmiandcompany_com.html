@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#0d6efd">
+  <meta name="description" content="Vijay Laxmi & Co - Premium Uniform Accessories Store">
+  <title>Vijay Laxmi & Co. 👑 | The Ultimate Uniform Store</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* --- CSS VARIABLES & THEME SETUP --- */
+    :root {
+      --bg-color: #f8faff; /* Slightly lighter/cleaner for Inter font */
+      --text-color: #1f2937;
+      --card-bg: #ffffff;
+      --navbar-bg: rgba(255, 255, 255, 0.95);
+      --primary: #0d6efd;
+      --accent: #198754;
+      --border-color: #e5e7eb;
+      --shadow: 0 10px 40px rgba(0,0,0,0.06);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #111827;
+      --text-color: #f3f4f6;
+      --card-bg: #1f2937;
+      --navbar-bg: rgba(31, 41, 55, 0.95);
+      --primary: #3b82f6;
+      --accent: #10b981;
+      --border-color: #374151;
+      --shadow: 0 10px 40px rgba(0,0,0,0.4);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      /* FONT CHANGE HERE */
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* --- NAVBAR --- */
+    .navbar {
+      background: var(--navbar-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+    }
+    
+    .navbar-brand img { height: 42px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .navbar-brand span { font-weight: 800; letter-spacing: -0.5px; font-size: 1.1rem; }
+
+    /* --- PRODUCT CARDS --- */
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px; /* Rounder corners */
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+    }
+    .card-img-wrapper {
+      height: 220px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6; /* Neutral gray bg for images */
+      position: relative;
+    }
+    .card-img-wrapper img {
+      max-width: 100%;
+      max-height: 100%;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .product-card:hover .card-img-wrapper img { transform: scale(1.15); }
+    
+    .badge-price {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: var(--primary);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+      letter-spacing: 0.5px;
+    }
+    
+    .badge-stock {
+      position: absolute;
+      top: 12px; left: 12px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .stock-ok { background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
+    .stock-low { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+    .stock-out { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
+
+    .card-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .card-title { font-weight: 700; margin-bottom: 0.3rem; font-size: 1.15rem; line-height: 1.3; }
+    .card-rating { color: #f59e0b; font-size: 0.9rem; margin-bottom: 0.75rem; letter-spacing: 1px; }
+    .card-text { color: var(--text-color); opacity: 0.7; font-size: 0.95rem; flex-grow: 1; line-height: 1.5; }
+    
+    /* --- BUTTONS & CONTROLS --- */
+    .btn { font-weight: 600; padding: 0.5rem 1.2rem; letter-spacing: 0.3px; }
+    .btn-action { transition: 0.2s; border-radius: 10px; }
+    .btn-wishlist { border: 1px solid var(--border-color); color: var(--text-color); }
+    .btn-wishlist:hover { background: #fee2e2; border-color: #fca5a5; color: #dc3545; }
+    .btn-wishlist.active { background: #dc3545; color: white; border-color: #dc3545; box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3); }
+
+    /* Quantity Controls */
+    .qty-control {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .qty-btn {
+      background: var(--bg-color);
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      color: var(--text-color);
+      font-weight: bold;
+    }
+    .qty-btn:hover { background: var(--border-color); }
+    .qty-val { padding: 0 12px; font-weight: 700; min-width: 35px; text-align: center; font-size: 0.95rem; }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #0f172a; /* Slate 900 */
+      color: white;
+      margin-top: auto;
+      padding-top: 4rem;
+    }
+    .footer-link { color: #94a3b8; text-decoration: none; transition: 0.2s; }
+    .footer-link:hover { color: #f8fafc; text-decoration: none; transform: translateX(5px); display: inline-block; }
+    .social-icon { font-size: 1.3rem; margin: 0 12px; color: #cbd5e1; transition: 0.3s; }
+    .social-icon:hover { color: white; transform: scale(1.2); }
+
+    /* --- UTILS --- */
+    .toast-container { z-index: 1060; }
+    .form-control, .form-select {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      border-color: var(--border-color);
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+    }
+    .form-control:focus { background-color: var(--card-bg); color: var(--text-color); box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1); }
+    
+    /* Input Range */
+    .form-range::-webkit-slider-thumb { background: var(--primary); }
+
+    /* --- MOBILE APP FEEL --- */
+    @media (max-width: 768px) {
+      .product-card { margin-bottom: 12px; }
+      #heroTitle { font-size: 2rem; }
+      .navbar-collapse {
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: 0 0 20px 20px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+        border-top: none;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <img src="https://uploads.onecompiler.io/436why5we/43n7rjxra/1000052369.png" alt="Logo">
+        <div class="d-flex flex-column">
+          <span data-i18n="brandName">Vijay Laxmi & Co. 👑</span>
+          <small style="font-size: 0.7rem; font-weight: 500; opacity: 0.7; letter-spacing: 0.5px;" data-i18n="brandSub">Uniform Accessories ✨</small>
+        </div>
+      </a>
+      
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <span class="navbar-toggler-icon" style="filter: opacity(0.7);"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <div class="mx-auto my-3 my-lg-0 w-100" style="max-width: 450px;">
+          <div class="input-group">
+            <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="bi bi-search"></i></span>
+            <input type="text" id="searchInput" class="form-control border-start-0 ps-0" data-i18n-placeholder="searchPlaceholder" placeholder="Search belts, caps... 🔍" onkeyup="app.filterProducts()">
+          </div>
+        </div>
+
+        <ul class="navbar-nav ms-auto align-items-center gap-2 gap-lg-3">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle fs-5 text-primary"></i> <span id="userNameDisplay" class="fw-semibold">Guest 👤</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2">
+              <li><a class="dropdown-item py-2" href="#" id="loginBtn" onclick="app.showLoginModal()">Login 🔐</a></li>
+              <li><a class="dropdown-item d-none py-2" href="#" id="ordersBtn" onclick="app.showOrderHistory()">My Orders 📦</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item d-none py-2 text-danger" href="#" id="logoutBtn" onclick="app.logout()">Logout 🚪</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" id="currencyLabel">₹ INR 🇮🇳</a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2">
+              <li><a class="dropdown-item py-2" href="#" onclick="app.setCurrency('INR')">₹ INR 🇮🇳</a></li>
+              <li><a class="dropdown-item py-2" href="#" onclick="app.setCurrency('USD')">$ USD 🇺🇸</a></li>
+              <li><a class="dropdown-item py-2" href="#" onclick="app.setCurrency('EUR')">€ EUR 🇪🇺</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-translate fs-5"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2">
+              <li><a class="dropdown-item py-2" href="#" onclick="app.setLang('en')">English 🇬🇧</a></li>
+              <li><a class="dropdown-item py-2" href="#" onclick="app.setLang('hi')">हिन्दी (Hindi) 🇮🇳</a></li>
+              <li><a class="dropdown-item py-2" href="#" onclick="app.setLang('es')">Español 🇪🇸</a></li>
+              <li><a class="dropdown-item py-2" href="#" onclick="app.setLang('fr')">Français 🇫🇷</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <div class="form-check form-switch pt-1">
+              <input class="form-check-input" style="cursor: pointer;" type="checkbox" id="themeToggle">
+              <label class="form-check-label" for="themeToggle"><i class="bi bi-moon-stars-fill text-warning"></i></label>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <button class="btn btn-primary position-relative rounded-circle p-2" style="width: 45px; height: 45px;" onclick="app.openCart()">
+              <i class="bi bi-bag-fill fs-5"></i>
+              <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light d-none">0</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="py-5 text-center bg-primary bg-gradient text-white shadow-sm mb-4 position-relative overflow-hidden">
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent); background-size: 60px 60px; opacity: 0.1;"></div>
+    <div class="container position-relative z-1">
+      <h1 class="fw-bolder display-4 mb-3" id="heroTitle" data-i18n="heroTitle">Premium Uniform Accessories 💎</h1>
+      <p class="lead fw-normal opacity-75" data-i18n="heroSubtitle">Serving Schools, Security & Organizations for over 20 years. 🏫👮‍♂️</p>
+    </div>
+  </header>
+
+  <div class="container mb-5">
+    <div class="row g-4">
+      
+      <aside class="col-lg-3">
+        <div class="card shadow-sm border-0 p-4 mb-3 rounded-4" style="background: var(--card-bg);">
+          <h5 class="fw-bold mb-4"><i class="bi bi-sliders2"></i> <span data-i18n="filters">Filters 🌪️</span></h5>
+          
+          <div class="mb-4">
+            <label class="form-label small fw-bold text-uppercase text-muted ls-1" data-i18n="category">Category 📂</label>
+            <select class="form-select form-select-sm" id="categoryFilter" onchange="app.filterProducts()">
+              <option value="all" data-i18n="catAll">All Categories 🌐</option>
+              <option value="wearables" data-i18n="catWear">Wearables 🧢</option>
+              <option value="accessories" data-i18n="catAcc">Accessories 🧣</option>
+              <option value="badges" data-i18n="catBadge">Badges & ID 📛</option>
+              <option value="equipment" data-i18n="catEquip">Equipment 📢</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label small fw-bold text-uppercase text-muted ls-1" data-i18n="priceRange">Max Price 💰</label>
+            <input type="range" class="form-range" id="priceRange" min="0" max="2000" step="50" oninput="app.filterProducts()">
+            <div class="d-flex justify-content-between small fw-bold">
+              <span>0</span>
+              <span id="priceValue" class="text-primary">2000</span>
+            </div>
+          </div>
+          
+          <div class="form-check mb-4">
+             <input class="form-check-input" type="checkbox" id="stockFilter" onchange="app.filterProducts()">
+             <label class="form-check-label small fw-semibold" for="stockFilter" data-i18n="instockOnly">In Stock Only 📦</label>
+          </div>
+
+          <button class="btn btn-outline-secondary w-100 btn-sm rounded-3 py-2" onclick="app.resetFilters()" data-i18n="resetFilter">Reset Filters 🔄</button>
+        </div>
+
+        <div class="card shadow-sm border-0 p-4 text-center rounded-4" style="background: var(--card-bg);">
+          <h6 class="fw-bold mb-2"><i class="bi bi-heart-fill text-danger"></i> <span data-i18n="wishlist">Wishlist ❤️</span></h6>
+          <p class="small text-muted mb-3"><span data-i18n="youHave">You have</span> <strong id="wishlistCount" class="text-dark">0</strong> <span data-i18n="itemsSaved">items saved.</span></p>
+          <button class="btn btn-sm btn-outline-danger rounded-pill px-4" onclick="app.showWishlist()" data-i18n="viewWishlist">View Wishlist 🎀</button>
+        </div>
+      </aside>
+
+      <section class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2 p-3 rounded-3" style="background: rgba(var(--primary), 0.05);">
+          <span class="fw-semibold text-primary small" id="resultCount">Showing all items 🔍</span>
+          <select class="form-select form-select-sm w-auto border-0 shadow-none bg-transparent fw-bold text-end" id="sortFilter" onchange="app.filterProducts()">
+            <option value="default" data-i18n="sortDef">Sort: Default 📌</option>
+            <option value="low-high" data-i18n="sortLow">Price: Low to High 📉</option>
+            <option value="high-low" data-i18n="sortHigh">Price: High to Low 📈</option>
+            <option value="rating" data-i18n="sortRating">Top Rated ⭐</option>
+          </select>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="productGrid">
+          </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 rounded-4 shadow-lg" style="background: var(--card-bg); color: var(--text-color);">
+        <div class="modal-header border-bottom-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(var(--invert));"></button>
+        </div>
+        <div class="modal-body pb-5 px-4">
+          <div class="row">
+            <div class="col-md-6 text-center">
+              <img id="modalImg" src="" class="img-fluid rounded-4 shadow-sm" style="max-height: 350px;">
+            </div>
+            <div class="col-md-6 mt-4 mt-md-0 d-flex flex-column justify-content-center">
+              <h2 class="fw-bolder mb-2" id="modalTitle"></h2>
+              <div class="text-warning mb-3 fs-5" id="modalRating"></div>
+              <h3 class="text-primary fw-bolder mb-3" id="modalPrice"></h3>
+              <p class="text-muted mb-4 lead fs-6" id="modalDesc"></p>
+              
+              <div class="d-flex align-items-center gap-2 mb-4">
+                <span id="modalStockBadge" class="badge rounded-pill"></span>
+                <span id="modalStockText" class="small fw-bold text-muted"></span>
+              </div>
+
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary btn-lg rounded-pill shadow-sm" id="modalAddToCartBtn">Add to Cart 🛒</button>
+                <button class="btn btn-outline-secondary rounded-pill" onclick="app.shareProduct()">
+                  <i class="bi bi-share-fill"></i> <span data-i18n="share">Share Product 🔗</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="cartModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4" style="background: var(--card-bg); color: var(--text-color);">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h4 class="modal-title fw-bold"><span data-i18n="cartTitle">Your Cart</span> 🛒✨</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group list-group-flush my-3" id="cartList"></ul>
+          <div class="text-center py-5" id="emptyCartMsg">
+            <i class="bi bi-cart-x fs-1 text-muted opacity-50"></i>
+            <p class="mt-3 text-muted" data-i18n="cartEmpty">Your cart is empty 💨</p>
+          </div>
+          
+          <div class="input-group mt-4 rounded-3 overflow-hidden" id="couponSection">
+            <span class="input-group-text bg-light border-0"><i class="bi bi-ticket-perforated-fill text-primary"></i></span>
+            <input type="text" id="couponInput" class="form-control border-0 bg-light" placeholder="Code: WELCOME10 🎁">
+            <button class="btn btn-dark" onclick="app.applyCoupon()" data-i18n="apply">Apply ✨</button>
+          </div>
+          <div id="couponMsg" class="small mt-2 fw-bold text-center"></div>
+        </div>
+        <div class="modal-footer d-block bg-light rounded-bottom-4 border-top-0 pt-4">
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted" data-i18n="subtotal">Subtotal:</span>
+            <span id="cartSubtotal" class="fw-bold">0</span>
+          </div>
+          <div class="d-flex justify-content-between text-success mb-3">
+            <span data-i18n="discount">Discount:</span>
+            <span id="cartDiscount">-0</span>
+          </div>
+          <div class="d-flex justify-content-between fw-bolder fs-4 mb-4 text-primary">
+            <span data-i18n="total">Total:</span>
+            <span id="cartTotal">0</span>
+          </div>
+          <button class="btn btn-success btn-lg w-100 rounded-pill shadow-sm py-3" onclick="app.checkout()" data-i18n="checkout">Checkout 🚀</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content rounded-4 border-0" style="background: var(--card-bg); color: var(--text-color);">
+        <div class="modal-header border-bottom-0 justify-content-center pt-4">
+          <h3 class="modal-title fw-bold" data-i18n="login">Login 🔐</h3>
+        </div>
+        <div class="modal-body px-4 pb-4">
+          <form onsubmit="app.handleLogin(event)">
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Email 📧</label>
+              <input type="email" id="loginEmail" class="form-control" required placeholder="user@example.com">
+            </div>
+            <div class="mb-4">
+              <label class="form-label small fw-bold text-muted">Password 🔑</label>
+              <input type="password" class="form-control" placeholder="Any password works" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 rounded-pill py-2">Sign In ⚡</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ordersModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 border-0" style="background: var(--card-bg); color: var(--text-color);">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title fw-bold" data-i18n="orderHistory">Order History 📜</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="ordersList" class="list-group list-group-flush">
+            </div>
+          <div id="noOrdersMsg" class="text-center py-5 text-muted">
+            <i class="bi bi-box-seam fs-1 opacity-50"></i>
+            <p class="mt-2">No past orders found 🕸️</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="row gy-5">
+        <div class="col-md-4">
+          <h5 class="fw-bold text-white mb-4" data-i18n="brandName">Vijay Laxmi & Co. 👑</h5>
+          <p class="small text-white-50">Proprietor: Bhavendra Sharma 👨‍💼</p>
+          <p class="small text-white-50" data-i18n="footerDesc">Trusted supplier of high-quality uniform accessories. We ensure durability and style for every profession. 🛡️✨</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="fw-bold text-white mb-4" data-i18n="contactUs">Contact Us 📞</h5>
+          <ul class="list-unstyled text-white-50 small">
+            <li class="mb-3"><i class="bi bi-telephone me-2 text-primary"></i> +91-9319931812</li>
+            <li class="mb-3"><i class="bi bi-envelope me-2 text-primary"></i> vijaylaxmiandcobksharma@gmail.com</li>
+            <li class="mb-3"><i class="bi bi-geo-alt me-2 text-primary"></i> Aligarh, Uttar Pradesh, India 🇮🇳</li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5 class="fw-bold text-white mb-4" data-i18n="followUs">Follow Us 🌐</h5>
+          <div class="d-flex mb-4">
+            <a href="https://youtube.com/@vijaylaxmiandco.bksharma" class="social-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/share/195aHu5Jif/" class="social-icon" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/vijay.laxmi_and_company" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/vijaylaxmiandcobksharma" class="social-icon" target="_blank"><i class="fab fa-telegram"></i></a>
+          </div>
+          <div>
+             <button class="btn btn-outline-light btn-sm rounded-pill px-3" onclick="window.scrollTo(0,0)">Back to Top ⬆️</button>
+          </div>
+        </div>
+      </div>
+      <hr class="border-secondary mt-5 opacity-25">
+      <div class="text-center pb-4 small text-white-50">
+        © <span id="year"></span> Vijay Laxmi & Company. All rights reserved. 🔒
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast align-items-center text-white bg-primary border-0 shadow-lg rounded-3" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body fw-bold" id="toastMessage">Action Successful 👍</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    /**
+     * VIJAY LAXMI & CO - ULTIMATE E-COMMERCE ENGINE 🚀
+     */
+
+    // --- 1. CONFIGURATION & DATABASE (Added Emojis to Data) ---
+    
+    // Translation Dictionary
+    const dictionary = {
+      en: {
+        brandName: "Vijay Laxmi & Co. 👑", brandSub: "Uniform Accessories ✨", searchPlaceholder: "Search belts, caps... 🔍",
+        heroTitle: "Premium Uniform Accessories 💎", heroSubtitle: "Serving Schools, Security & Organizations for over 20 years. 🏫",
+        filters: "Filters 🌪️", category: "Category 📂", priceRange: "Max Price 💰", instockOnly: "In Stock Only 📦", resetFilter: "Reset Filters 🔄",
+        wishlist: "Wishlist ❤️", youHave: "You have", itemsSaved: "items saved. 💾", viewWishlist: "View Wishlist 🎀",
+        catAll: "All Categories 🌐", catWear: "Wearables 🧢", catAcc: "Accessories 🧣", catBadge: "Badges & ID 📛", catEquip: "Equipment 📢",
+        sortDef: "Sort: Default 📌", sortLow: "Price: Low to High 📉", sortHigh: "Price: High to Low 📈", sortRating: "Top Rated ⭐",
+        cartTitle: "Your Cart", cartEmpty: "Your cart is empty 💨", subtotal: "Subtotal:", discount: "Discount:", total: "Total:",
+        checkout: "Checkout 🚀", apply: "Apply ✨", login: "Login 🔐", orderHistory: "Order History 📜", share: "Share Product 🔗",
+        contactUs: "Contact Us 📞", followUs: "Follow Us 🌐", footerDesc: "Trusted supplier of high-quality uniform accessories. 🛡️",
+        outOfStock: "Out of Stock ❌", lowStock: "Low Stock ⚠️", inStock: "In Stock ✅"
+      },
+      hi: {
+        brandName: "विजय लक्ष्मी एंड कंपनी 👑", brandSub: "वर्दी सहायक उपकरण ✨", searchPlaceholder: "बेल्ट, टोपी खोजें... 🔍",
+        heroTitle: "प्रीमियम वर्दी सहायक उपकरण 💎", heroSubtitle: "20 से अधिक वर्षों से स्कूलों और संगठनों की सेवा। 🏫",
+        filters: "फिल्टर 🌪️", category: "श्रेणी 📂", priceRange: "अधिकतम मूल्य 💰", instockOnly: "केवल स्टॉक में 📦", resetFilter: "रीसेट करें 🔄",
+        wishlist: "इच्छासूची ❤️", youHave: "आपके पास", itemsSaved: "आइटम हैं। 💾", viewWishlist: "इच्छासूची देखें 🎀",
+        catAll: "सभी श्रेणियां 🌐", catWear: "पहनने योग्य 🧢", catAcc: "सहायक उपकरण 🧣", catBadge: "बैज और आईडी 📛", catEquip: "उपकरण 📢",
+        sortDef: "क्रम: डिफ़ॉल्ट 📌", sortLow: "मूल्य: कम से ज्यादा 📉", sortHigh: "मूल्य: ज्यादा से कम 📈", sortRating: "टॉप रेटेड ⭐",
+        cartTitle: "शॉपिंग कार्ट", cartEmpty: "आपकी कार्ट खाली है 💨", subtotal: "उपयोगकर्ता:", discount: "छूट:", total: "कुल:",
+        checkout: "चेकआउट 🚀", apply: "लागू करें ✨", login: "लॉग इन 🔐", orderHistory: "आर्डर इतिहास 📜", share: "शेयर करें 🔗",
+        contactUs: "संपर्क करें 📞", followUs: "फालो करें 🌐", footerDesc: "उच्च गुणवत्ता वाले वर्दी सामान। 🛡️",
+        outOfStock: "स्टॉक खत्म ❌", lowStock: "कम स्टॉक ⚠️", inStock: "स्टॉक में ✅"
+      },
+      es: {
+        brandName: "Vijay Laxmi & Cía 👑", brandSub: "Accesorios ✨", searchPlaceholder: "Buscar... 🔍",
+        heroTitle: "Accesorios Premium 💎", heroSubtitle: "Sirviendo a escuelas por 20 años. 🏫",
+        filters: "Filtros 🌪️", category: "Categoría 📂", priceRange: "Precio Máximo 💰", instockOnly: "En Stock 📦", resetFilter: "Reiniciar 🔄",
+        wishlist: "Lista de Deseos ❤️", youHave: "Tienes", itemsSaved: "guardados. 💾", viewWishlist: "Ver Lista 🎀",
+        catAll: "Todas 🌐", catWear: "Ropa 🧢", catAcc: "Accesorios 🧣", catBadge: "Insignias 📛", catEquip: "Equipo 📢",
+        sortDef: "Orden: Defecto 📌", sortLow: "Precio: Bajo a Alto 📉", sortHigh: "Precio: Alto a Bajo 📈", sortRating: "Mejor Valorado ⭐",
+        cartTitle: "Carrito", cartEmpty: "Vacío 💨", subtotal: "Subtotal:", discount: "Descuento:", total: "Total:",
+        checkout: "Pagar 🚀", apply: "Aplicar ✨", login: "Entrar 🔐", orderHistory: "Historial 📜", share: "Compartir 🔗",
+        contactUs: "Contacto 📞", followUs: "Síguenos 🌐", footerDesc: "Proveedor confiable. 🛡️",
+        outOfStock: "Agotado ❌", lowStock: "Poco Stock ⚠️", inStock: "En Stock ✅"
+      },
+      fr: {
+        brandName: "Vijay Laxmi & Cie 👑", brandSub: "Accessoires ✨", searchPlaceholder: "Recherche... 🔍",
+        heroTitle: "Accessoires Premium 💎", heroSubtitle: "Au service des écoles. 🏫",
+        filters: "Filtres 🌪️", category: "Catégorie 📂", priceRange: "Prix Max 💰", instockOnly: "En Stock 📦", resetFilter: "Réinitialiser 🔄",
+        wishlist: "Favoris ❤️", youHave: "Vous avez", itemsSaved: "articles. 💾", viewWishlist: "Voir Favoris 🎀",
+        catAll: "Toutes 🌐", catWear: "Vêtements 🧢", catAcc: "Accessoires 🧣", catBadge: "Insignes 📛", catEquip: "Équipement 📢",
+        sortDef: "Tri: Défaut 📌", sortLow: "Prix: Bas à Haut 📉", sortHigh: "Prix: Haut à Bas 📈", sortRating: "Mieux Noté ⭐",
+        cartTitle: "Panier", cartEmpty: "Vide 💨", subtotal: "Sous-total:", discount: "Remise:", total: "Total:",
+        checkout: "Payer 🚀", apply: "Appliquer ✨", login: "Connexion 🔐", orderHistory: "Historique 📜", share: "Partager 🔗",
+        contactUs: "Contact 📞", followUs: "Suivez-nous 🌐", footerDesc: "Fournisseur de confiance. 🛡️",
+        outOfStock: "Rupture ❌", lowStock: "Stock Faible ⚠️", inStock: "En Stock ✅"
+      }
+    };
+
+    // Initial Product Data (with Stock & Rating)
+    const initialProducts = [
+      { id: 1, name: 'Belts ➰✨', cat: 'accessories', price: 250, stock: 50, rating: 4.5, image: 'https://uploads.onecompiler.io/436why5we/43ka942f9/1000046239.jpg', desc: 'Heavy-duty uniform belts available in various colors. Durable metal buckle. 🛡️' },
+      { id: 2, name: 'Ties 👔🎩', cat: 'accessories', price: 150, stock: 100, rating: 4.8, image: 'https://uploads.onecompiler.io/436why5we/43ka942f9/1000046241.jpg', desc: 'Elegant ties made from premium fabric. Perfect for school and corporate uniforms. 💼' },
+      { id: 3, name: 'ID Cards 🪪✨', cat: 'badges', price: 45, stock: 500, rating: 4.0, image: 'https://uploads.onecompiler.io/436why5we/43ka942f9/1000046238.jpg', desc: 'Standard ID card holders with lanyards. Transparent and durable plastic. 💳' },
+      { id: 4, name: 'Caps 🧢😎', cat: 'wearables', price: 120, stock: 5, rating: 4.2, image: 'https://uploads.onecompiler.io/436why5we/43ka942f9/1000045820.jpg', desc: 'Comfortable cotton and polyester caps. Adjustable sizing for all ages. ☀️' },
+      { id: 5, name: 'Badges 🎖️⭐', cat: 'badges', price: 80, stock: 200, rating: 4.7, image: 'https://uploads.onecompiler.io/436why5we/43ka942f9/1000046240.jpg', desc: 'Metallic and fabric badges for ranks, houses, and achievements. 🏆' },
+      { id: 6, name: 'Monograms 🧵🎨', cat: 'badges', price: 60, stock: 0, rating: 4.9, image: 'https://uploads.onecompiler.io/436why5we/43ka942f9/1000045826.jpg', desc: 'Intricately embroidered monograms for blazers and shirts. 🪡' },
+      { id: 7, name: 'Woggles 🌀🎗️', cat: 'accessories', price: 30, stock: 300, rating: 3.8, image: 'https://uploads.onecompiler.io/436why5we/43k6j7mr5/1000204856.jpg', desc: 'Scout and guide woggles available in leather and cane styles. 🏕️' },
+      { id: 8, name: 'Socks 🧦👟', cat: 'wearables', price: 90, stock: 150, rating: 4.3, image: 'https://uploads.onecompiler.io/436why5we/43ka942f9/1000045822.jpg', desc: 'Breathable cotton socks with reinforced heel and toe. 🏃' },
+      { id: 9, name: 'Whistle 📯🔊', cat: 'equipment', price: 110, stock: 20, rating: 4.6, image: 'https://uploads.onecompiler.io/436why5we/43k6j7mr5/1000204857.jpg', desc: 'High-decibel whistles for sports and security. Includes lanyard. 🚨' },
+      { id: 10, name: 'Shoulder Badge 🧷👮', cat: 'badges', price: 180, stock: 60, rating: 5.0, image: 'https://uploads.onecompiler.io/436why5we/43k6j7mr5/1000204855.jpg', desc: 'Epaulettes and shoulder badges for formal uniforms. Crisp appearance. ⭐' }
+    ];
+
+    const coupons = { 'WELCOME10': 0.10, 'SCHOOL20': 0.20 };
+    
+    // --- 2. APPLICATION LOGIC (CLASS) ---
+    
+    class App {
+      constructor() {
+        this.state = {
+          products: JSON.parse(localStorage.getItem('vl_products')) || initialProducts,
+          cart: JSON.parse(localStorage.getItem('vl_cart')) || [],
+          wishlist: JSON.parse(localStorage.getItem('vl_wish')) || [],
+          user: JSON.parse(localStorage.getItem('vl_user')) || null,
+          currency: localStorage.getItem('vl_currency') || 'INR',
+          lang: localStorage.getItem('vl_lang') || 'en',
+          rates: { INR: 1, USD: 0.012, EUR: 0.011 },
+          couponApplied: null 
+        };
+
+        this.grid = document.getElementById('productGrid');
+        this.toast = new bootstrap.Toast(document.getElementById('liveToast'));
+        
+        this.init();
+      }
+
+      init() {
+        this.updateLangUI();
+        this.setCurrency(this.state.currency, false);
+        this.checkAuth();
+        this.filterProducts();
+        this.updateCartUI();
+        this.updateWishlistUI();
+        
+        document.getElementById('year').innerText = new Date().getFullYear();
+        
+        // Theme Check
+        if(localStorage.getItem('theme') === 'dark') {
+          document.body.setAttribute('data-theme', 'dark');
+          document.getElementById('themeToggle').checked = true;
+        }
+
+        // Theme Toggle Listener
+        document.getElementById('themeToggle').addEventListener('change', (e) => {
+          if(e.target.checked) {
+            document.body.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+          } else {
+            document.body.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+          }
+        });
+      }
+
+      save() {
+        localStorage.setItem('vl_cart', JSON.stringify(this.state.cart));
+        localStorage.setItem('vl_wish', JSON.stringify(this.state.wishlist));
+        localStorage.setItem('vl_products', JSON.stringify(this.state.products));
+        if(this.state.user) localStorage.setItem('vl_user', JSON.stringify(this.state.user));
+        localStorage.setItem('vl_currency', this.state.currency);
+        localStorage.setItem('vl_lang', this.state.lang);
+      }
+
+      // --- RENDERERS ---
+
+      renderProducts(list = this.state.products) {
+        this.grid.innerHTML = '';
+        if(list.length === 0) {
+          this.grid.innerHTML = '<div class="col-12 text-center py-5"><h4>No products found 😔🔍</h4></div>';
+          return;
+        }
+
+        list.forEach(item => {
+          const isWished = this.state.wishlist.includes(item.id);
+          const priceDisplay = this.formatPrice(item.price);
+          
+          let stockBadge = '';
+          let btnDisabled = '';
+          if(item.stock === 0) {
+            stockBadge = `<span class="badge-stock stock-out">${dictionary[this.state.lang].outOfStock}</span>`;
+            btnDisabled = 'disabled';
+          } else if (item.stock < 10) {
+            stockBadge = `<span class="badge-stock stock-low">${dictionary[this.state.lang].lowStock}</span>`;
+          }
+
+          // Stars
+          const stars = this.getStarRating(item.rating);
+
+          const col = document.createElement('div');
+          col.className = 'col';
+          col.innerHTML = `
+            <div class="product-card h-100">
+              <div class="card-img-wrapper">
+                <img src="${item.image}" alt="${item.name}" loading="lazy">
+                <span class="badge-price">${priceDisplay}</span>
+                ${stockBadge}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">${item.name}</h5>
+                <div class="card-rating">${stars} <span class="text-muted small">(${item.rating})</span></div>
+                <p class="card-text text-truncate">${item.desc}</p>
+                
+                <div class="d-flex justify-content-between align-items-center mt-3 gap-2">
+                  <button class="btn btn-primary btn-sm btn-action flex-grow-1" onclick="app.openModal(${item.id})">
+                    <i class="bi bi-eye-fill"></i> View 👀
+                  </button>
+                  <button class="btn btn-action btn-wishlist ${isWished ? 'active' : ''}" onclick="app.toggleWish(${item.id})">
+                    <i class="bi bi-heart${isWished ? '-fill' : ''}"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          this.grid.appendChild(col);
+        });
+        document.getElementById('resultCount').innerText = `Showing ${list.length} items 🔎`;
+      }
+
+      getStarRating(rating) {
+        let stars = '';
+        for(let i=1; i<=5; i++) {
+          if(i <= rating) stars += '<i class="bi bi-star-fill"></i>';
+          else if(i - 0.5 <= rating) stars += '<i class="bi bi-star-half"></i>';
+          else stars += '<i class="bi bi-star text-muted opacity-25"></i>';
+        }
+        return stars;
+      }
+
+      // --- FILTERS & SORT ---
+      filterProducts() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const cat = document.getElementById('categoryFilter').value;
+        const maxPrice = document.getElementById('priceRange').value;
+        const inStockOnly = document.getElementById('stockFilter').checked;
+        const sortType = document.getElementById('sortFilter').value;
+        
+        document.getElementById('priceValue').innerText = maxPrice;
+
+        let filtered = this.state.products.filter(item => {
+          const matchSearch = item.name.toLowerCase().includes(search);
+          const matchCat = cat === 'all' || item.cat === cat;
+          const matchPrice = item.price <= maxPrice;
+          const matchStock = inStockOnly ? item.stock > 0 : true;
+          return matchSearch && matchCat && matchPrice && matchStock;
+        });
+
+        // Sorting
+        if (sortType === 'low-high') filtered.sort((a, b) => a.price - b.price);
+        else if (sortType === 'high-low') filtered.sort((a, b) => b.price - a.price);
+        else if (sortType === 'rating') filtered.sort((a, b) => b.rating - a.rating);
+
+        this.renderProducts(filtered);
+      }
+
+      resetFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('categoryFilter').value = 'all';
+        document.getElementById('priceRange').value = 2000;
+        document.getElementById('stockFilter').checked = false;
+        document.getElementById('sortFilter').value = 'default';
+        this.filterProducts();
+      }
+
+      // --- MODALS ---
+      openModal(id) {
+        const item = this.state.products.find(i => i.id === id);
+        if(!item) return;
+
+        document.getElementById('modalTitle').innerText = item.name;
+        document.getElementById('modalImg').src = item.image;
+        document.getElementById('modalDesc').innerText = item.desc;
+        document.getElementById('modalPrice').innerText = this.formatPrice(item.price);
+        document.getElementById('modalRating').innerHTML = this.getStarRating(item.rating);
+
+        const stockBadge = document.getElementById('modalStockBadge');
+        const stockText = document.getElementById('modalStockText');
+        const btn = document.getElementById('modalAddToCartBtn');
+
+        if(item.stock > 0) {
+          stockBadge.className = "badge bg-success";
+          stockBadge.innerText = dictionary[this.state.lang].inStock;
+          stockText.innerText = `${item.stock} units available 📦`;
+          btn.disabled = false;
+          btn.onclick = () => this.addToCart(id);
+          btn.innerText = "Add to Cart 🛒";
+        } else {
+          stockBadge.className = "badge bg-danger";
+          stockBadge.innerText = dictionary[this.state.lang].outOfStock;
+          stockText.innerText = "";
+          btn.disabled = true;
+          btn.innerText = "Out of Stock ❌";
+        }
+
+        // Sharing Context
+        this.currentShareUrl = `${window.location.origin}${window.location.pathname}?product=${id}`;
+
+        new bootstrap.Modal(document.getElementById('productModal')).show();
+      }
+
+      // --- CART & COUPONS ---
+      addToCart(id) {
+        const item = this.state.products.find(i => i.id === id);
+        if(item.stock <= 0) return alert('Out of stock ❌');
+
+        const existing = this.state.cart.find(i => i.id === id);
+        
+        if(existing) {
+          if(existing.qty < item.stock) existing.qty++;
+          else return this.showToast('Max stock reached ⚠️');
+        } else {
+          this.state.cart.push({ ...item, qty: 1 });
+        }
+        
+        this.save();
+        this.updateCartUI();
+        this.showToast(`Added ${item.name} to cart! 🛒✅`);
+        bootstrap.Modal.getInstance(document.getElementById('productModal'))?.hide();
+      }
+
+      updateCartQty(id, change) {
+        const cartItem = this.state.cart.find(i => i.id === id);
+        const product = this.state.products.find(i => i.id === id);
+
+        if(!cartItem) return;
+
+        const newQty = cartItem.qty + change;
+        if(newQty > 0 && newQty <= product.stock) {
+          cartItem.qty = newQty;
+        } else if (newQty > product.stock) {
+          this.showToast('No more stock available 🚫');
+        } else {
+          // Remove if 0
+          this.state.cart = this.state.cart.filter(i => i.id !== id);
+        }
+        this.save();
+        this.updateCartUI();
+      }
+
+      applyCoupon() {
+        const code = document.getElementById('couponInput').value.trim();
+        const msg = document.getElementById('couponMsg');
+        
+        if(coupons[code]) {
+          this.state.couponApplied = { code: code, discount: coupons[code] };
+          msg.className = "small mt-1 text-success";
+          msg.innerText = "Coupon Applied Successfully! 🎉";
+          this.updateCartUI();
+        } else {
+          this.state.couponApplied = null;
+          msg.className = "small mt-1 text-danger";
+          msg.innerText = "Invalid Coupon Code ❌";
+          this.updateCartUI();
+        }
+      }
+
+      updateCartUI() {
+        const list = document.getElementById('cartList');
+        const count = document.getElementById('cartCount');
+        const emptyMsg = document.getElementById('emptyCartMsg');
+        const couponSection = document.getElementById('couponSection');
+        
+        list.innerHTML = '';
+        let subtotal = 0;
+        let qtyTotal = 0;
+
+        this.state.cart.forEach(item => {
+          subtotal += item.price * item.qty;
+          qtyTotal += item.qty;
+          
+          const li = document.createElement('li');
+          li.className = 'list-group-item d-flex justify-content-between align-items-center bg-transparent border-bottom py-3';
+          li.innerHTML = `
+            <div class="d-flex align-items-center gap-3">
+              <img src="${item.image}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;">
+              <div>
+                <div class="fw-bold">${item.name}</div>
+                <div class="small text-muted">${this.formatPrice(item.price)}</div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+               <div class="qty-control">
+                  <button class="qty-btn" onclick="app.updateCartQty(${item.id}, -1)">-</button>
+                  <div class="qty-val">${item.qty}</div>
+                  <button class="qty-btn" onclick="app.updateCartQty(${item.id}, 1)">+</button>
+               </div>
+               <button class="btn btn-sm text-danger" onclick="app.updateCartQty(${item.id}, -100)"><i class="bi bi-trash-fill"></i></button>
+            </div>
+          `;
+          list.appendChild(li);
+        });
+
+        // Calculations
+        let discount = 0;
+        if(this.state.couponApplied) {
+           discount = subtotal * this.state.couponApplied.discount;
+        }
+        let total = subtotal - discount;
+
+        // UI Updates
+        if(qtyTotal > 0) {
+          count.innerText = qtyTotal;
+          count.classList.remove('d-none');
+          emptyMsg.classList.add('d-none');
+          couponSection.classList.remove('d-none');
+        } else {
+          count.classList.add('d-none');
+          emptyMsg.classList.remove('d-none');
+          couponSection.classList.add('d-none');
+        }
+
+        document.getElementById('cartSubtotal').innerText = this.formatPrice(subtotal);
+        document.getElementById('cartDiscount').innerText = "-" + this.formatPrice(discount);
+        document.getElementById('cartTotal').innerText = this.formatPrice(total);
+      }
+
+      checkout() {
+        if(this.state.cart.length === 0) return;
+        
+        // Stock Deduction & Order History
+        this.state.cart.forEach(cItem => {
+          const pItem = this.state.products.find(p => p.id === cItem.id);
+          if(pItem) pItem.stock -= cItem.qty;
+        });
+
+        const orderDetails = {
+          id: Date.now(),
+          date: new Date().toLocaleDateString(),
+          items: [...this.state.cart],
+          total: document.getElementById('cartTotal').innerText
+        };
+
+        if(this.state.user) {
+          if(!this.state.user.orders) this.state.user.orders = [];
+          this.state.user.orders.push(orderDetails);
+          this.save();
+        }
+
+        this.state.cart = [];
+        this.state.couponApplied = null;
+        document.getElementById('couponInput').value = "";
+        document.getElementById('couponMsg').innerText = "";
+        
+        this.save();
+        this.filterProducts(); // Refresh stock UI
+        this.updateCartUI();
+        bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
+        
+        alert(`Order Placed Successfully! 🎉 ID: ${orderDetails.id}`);
+        if(this.state.user) this.showOrderHistory();
+      }
+
+      openCart() {
+        new bootstrap.Modal(document.getElementById('cartModal')).show();
+      }
+
+      // --- AUTH & ORDERS ---
+      showLoginModal() { new bootstrap.Modal(document.getElementById('loginModal')).show(); }
+
+      handleLogin(e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        // Mock Login
+        this.state.user = { 
+          email: email, 
+          name: email.split('@')[0],
+          orders: this.state.user ? this.state.user.orders : [] 
+        };
+        this.checkAuth();
+        this.save();
+        bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+        this.showToast(`Welcome back, ${this.state.user.name}! 👋`);
+      }
+
+      logout() {
+        this.state.user = null;
+        this.checkAuth();
+        this.save();
+        this.showToast('Logged out 👋');
+      }
+
+      checkAuth() {
+        const u = this.state.user;
+        const nameDisplay = document.getElementById('userNameDisplay');
+        const loginBtn = document.getElementById('loginBtn');
+        const ordersBtn = document.getElementById('ordersBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        if(u) {
+          nameDisplay.innerText = u.name;
+          loginBtn.classList.add('d-none');
+          ordersBtn.classList.remove('d-none');
+          logoutBtn.classList.remove('d-none');
+        } else {
+          nameDisplay.innerText = "Guest 👤";
+          loginBtn.classList.remove('d-none');
+          ordersBtn.classList.add('d-none');
+          logoutBtn.classList.add('d-none');
+        }
+      }
+
+      showOrderHistory() {
+        if(!this.state.user) return;
+        const list = document.getElementById('ordersList');
+        const msg = document.getElementById('noOrdersMsg');
+        const orders = this.state.user.orders || [];
+
+        list.innerHTML = '';
+        if(orders.length === 0) {
+          msg.classList.remove('d-none');
+        } else {
+          msg.classList.add('d-none');
+          orders.reverse().forEach(o => {
+            const itemNames = o.items.map(i => `${i.qty}x ${i.name}`).join(', ');
+            const el = document.createElement('div');
+            el.className = 'list-group-item';
+            el.innerHTML = `
+              <div class="d-flex justify-content-between">
+                <strong>Order #${o.id} 📦</strong>
+                <span class="text-primary fw-bold">${o.total}</span>
+              </div>
+              <small class="text-muted"><i class="bi bi-calendar"></i> ${o.date}</small>
+              <p class="mb-0 small mt-1 text-truncate text-secondary">${itemNames}</p>
+            `;
+            list.appendChild(el);
+          });
+        }
+        new bootstrap.Modal(document.getElementById('ordersModal')).show();
+      }
+
+      // --- WISHLIST ---
+      toggleWish(id) {
+        if(this.state.wishlist.includes(id)) {
+          this.state.wishlist = this.state.wishlist.filter(i => i !== id);
+          this.showToast('Removed from wishlist 💔');
+        } else {
+          this.state.wishlist.push(id);
+          this.showToast('Added to wishlist ❤️');
+        }
+        this.save();
+        this.filterProducts(); // Update hearts
+        this.updateWishlistUI();
+      }
+
+      updateWishlistUI() {
+        document.getElementById('wishlistCount').innerText = this.state.wishlist.length;
+      }
+
+      showWishlist() {
+        if(this.state.wishlist.length === 0) return alert("Wishlist is empty 💔");
+        // Force filter to show wishlist
+        const wished = this.state.products.filter(p => this.state.wishlist.includes(p.id));
+        this.renderProducts(wished);
+        document.getElementById('resultCount').innerText = "Wishlist Items ❤️";
+        document.getElementById('categoryFilter').value = 'all'; 
+      }
+
+      // --- UTILS ---
+      formatPrice(amount) {
+        const val = amount * this.state.rates[this.state.currency];
+        let symbol = '₹';
+        if(this.state.currency === 'USD') symbol = '$';
+        if(this.state.currency === 'EUR') symbol = '€';
+        return `${symbol} ${val.toFixed(2)}`;
+      }
+
+      setCurrency(curr, render = true) {
+        this.state.currency = curr;
+        let flag = curr === 'INR' ? '🇮🇳' : (curr === 'USD' ? '🇺🇸' : '🇪🇺');
+        let sym = curr === 'INR' ? '₹' : (curr === 'USD' ? '$' : '€');
+        
+        document.getElementById('currencyLabel').innerText = `${sym} ${curr} ${flag}`;
+        if(render) {
+          this.save();
+          this.filterProducts();
+          this.updateCartUI();
+        }
+      }
+
+      setLang(lang) {
+        this.state.lang = lang;
+        this.save();
+        this.updateLangUI();
+        this.filterProducts(); 
+      }
+
+      updateLangUI() {
+        const dict = dictionary[this.state.lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if(dict[key]) el.innerText = dict[key];
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if(dict[key]) el.placeholder = dict[key];
+        });
+      }
+
+      shareProduct() {
+        if (navigator.share) {
+          navigator.share({
+            title: document.getElementById('modalTitle').innerText,
+            text: document.getElementById('modalDesc').innerText,
+            url: window.location.href 
+          }).catch(console.error);
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          this.showToast('Link copied to clipboard! 🔗✅');
+        }
+      }
+
+      showToast(msg) {
+        document.getElementById('toastMessage').innerText = msg;
+        this.toast.show();
+      }
+    }
+
+    // --- INITIALIZE APP ---
+    const app = new App();
+
+  </script>
+</body>
+</html>
