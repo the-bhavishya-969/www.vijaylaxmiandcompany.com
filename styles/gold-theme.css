@@ -1,0 +1,67 @@
+.bg-dark {
+    background-color: #000;
+}
+
+.bg-gold {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+}
+
+:root {
+    --gold-accent: #FFD700;
+    --dark-bg: #111;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--gold-accent);
+}
+
+h1, h2, h3 {
+    background: linear-gradient(90deg, #FFD700, #FFC107);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-animation 3s ease infinite;
+}
+
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.button {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.button:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow);
+}
+
+.card {
+    background: var(--glass-bg);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Additional styles */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--dark-bg);
+    color: var(--gold-accent);
+}
