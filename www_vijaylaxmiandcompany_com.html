@@ -186,6 +186,47 @@
     /* Input Range */
     .form-range::-webkit-slider-thumb { background: var(--primary); }
 
+
+    .promo-strip {
+      background: linear-gradient(90deg, #0b132b, #1d4ed8);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.2px;
+    }
+    .feature-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+    .kpi-card {
+      background: linear-gradient(140deg, rgba(13,110,253,0.1), rgba(16,185,129,0.08));
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .testimonial-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.1rem;
+      height: 100%;
+    }
+    .sticky-whatsapp {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1100;
+      border-radius: 999px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
     /* --- MOBILE APP FEEL --- */
     @media (max-width: 768px) {
       .product-card { margin-bottom: 12px; }
@@ -202,6 +243,10 @@
   </style>
 </head>
 <body data-theme="light">
+  <div class="promo-strip py-2 text-center">
+    🚚 Free shipping above ₹2,500 | 🛡️ Bulk-order quality guarantee | ⚡ Same-day dispatch for ready stock
+  </div>
+
 
   <nav class="navbar navbar-expand-lg">
     <div class="container">
@@ -282,6 +327,25 @@
       <p class="lead fw-normal opacity-75" data-i18n="heroSubtitle">Serving Schools, Security & Organizations for over 20 years. 🏫👮‍♂️</p>
     </div>
   </header>
+
+
+  <section class="container mb-4">
+    <div class="row g-3">
+      <div class="col-md-3 col-6"><div class="feature-chip"><i class="bi bi-patch-check-fill text-primary"></i>ISO-grade finish</div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip"><i class="bi bi-lightning-charge-fill text-warning"></i>Fast B2B quotes</div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip"><i class="bi bi-brilliance text-success"></i>Custom branding</div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip"><i class="bi bi-shield-lock-fill text-danger"></i>Secure checkout</div></div>
+    </div>
+  </section>
+
+  <section class="container mb-4">
+    <div class="row g-3">
+      <div class="col-md-3 col-6"><div class="kpi-card"><h4 class="fw-bolder mb-0">20+</h4><small>Years Experience</small></div></div>
+      <div class="col-md-3 col-6"><div class="kpi-card"><h4 class="fw-bolder mb-0">5K+</h4><small>Institution Clients</small></div></div>
+      <div class="col-md-3 col-6"><div class="kpi-card"><h4 class="fw-bolder mb-0">99%</h4><small>On-time Fulfillment</small></div></div>
+      <div class="col-md-3 col-6"><div class="kpi-card"><h4 class="fw-bolder mb-0">24/7</h4><small>Order Support</small></div></div>
+    </div>
+  </section>
 
   <div class="container mb-5">
     <div class="row g-4">
@@ -458,6 +522,21 @@
       </div>
     </div>
   </div>
+
+
+  <section class="container mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3 class="fw-bold mb-0">What Institutions Say ⭐</h3>
+      <button class="btn btn-outline-primary rounded-pill">Request Corporate Catalog</button>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-4"><div class="testimonial-card"><p class="mb-2">“Consistent quality and professional dispatch for annual school uniform drives.”</p><small class="text-muted">— Procurement Head, Aligarh Public School</small></div></div>
+      <div class="col-md-4"><div class="testimonial-card"><p class="mb-2">“Their custom monograms and badge batches are crisp and premium.”</p><small class="text-muted">— Operations Manager, Zenith Security</small></div></div>
+      <div class="col-md-4"><div class="testimonial-card"><p class="mb-2">“Quick support and clear billing made bulk repeat ordering easy.”</p><small class="text-muted">— Admin Team, Regional Sports Academy</small></div></div>
+    </div>
+  </section>
+
+  <a class="btn btn-success sticky-whatsapp" href="https://wa.me/919319931812" target="_blank"><i class="bi bi-whatsapp"></i> WhatsApp</a>
 
   <footer>
     <div class="container">
